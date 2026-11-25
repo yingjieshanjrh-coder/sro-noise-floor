@@ -9,9 +9,14 @@ authors:
 version: 0.1.0
 date-released: 2026-11-25
 license: MIT
+doi: 10.5281/zenodo.24543374
 repository-code: "https://github.com/yingjieshanjrh-coder/sro-noise-floor"
 keywords:
   - short-range order
   - Warren-Cowley parameter
   - high-entropy alloys
   - finite-size effects
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.24543374
+    description: Zenodo archive of version 0.1.0

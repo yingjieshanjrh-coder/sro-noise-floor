@@ -1,5 +1,7 @@
 # sro-noise-floor
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24543374.svg)](https://doi.org/10.5281/zenodo.24543374)
+
 **Exact finite-size statistics for Warren–Cowley short-range-order parameters.**
 
 Chemical short-range order (SRO) in alloys is usually reported as
@@ -218,12 +220,25 @@ tests/          pytest suite (enumeration, sampling, asymptotics, CLI)
 
 ## Citation
 
-If you use this code, please cite the repository:
+If you use this code, please cite the archived release:
 
 ```
-Y. Shan, sro-noise-floor: exact finite-size statistics for
-Warren-Cowley short-range-order parameters (2026),
-https://github.com/yingjieshanjrh-coder/sro-noise-floor
+Y. Shan, sro-noise-floor: exact finite-size statistics for Warren-Cowley
+short-range-order parameters, version 0.1.0 (2026).
+Zenodo. https://doi.org/10.5281/zenodo.24543374
+```
+
+```bibtex
+@software{shan_sro_noise_floor_2026,
+  author    = {Shan, Yingjie},
+  title     = {sro-noise-floor: exact finite-size statistics for
+               Warren-Cowley short-range-order parameters},
+  version   = {0.1.0},
+  year      = {2026},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.24543374},
+  url       = {https://doi.org/10.5281/zenodo.24543374}
+}
 ```
 
 ## License
