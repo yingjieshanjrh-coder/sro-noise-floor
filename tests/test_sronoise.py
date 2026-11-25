@@ -128,3 +128,43 @@ def test_global_dof_and_calibration():
     assert r.dof == 2 * 3  # two shells x K(K-1)/2
     # p-values of the global test are approximately uniform under the null
     assert 0.02 < np.mean(np.array(pvals) < 0.05) < 0.09
+
+
+@pytest.mark.parametrize("structure,reps", [("fcc", 3), ("bcc", 4),
+                                            ("hcp", (3, 2, 2)),
+                                            ("diamond", 2)])
+def test_from_positions_matches_builder(structure, reps):
+    from sronoise import from_positions
+    ref = build_supercell(structure, reps, 3)
+    lat = np.diag(ref.box) * 3.6                     # Angstrom-like scale
+    rng = np.random.default_rng(0)
+    perm = rng.permutation(ref.n_sites)              # shuffled site order
+    pos = ref.positions[perm] * 3.6
+    pos += rng.normal(0, 0.01, pos.shape)            # small noise
+    cell = from_positions(pos, lat, 3, tol=0.08)
+    inv = np.argsort(perm)
+    for s in range(3):
+        a = np.sort(inv[ref.neighbours[s][perm]], axis=1)
+        b = np.sort(cell.neighbours[s], axis=1)
+        assert np.array_equal(a, b)
+    assert np.array_equal(cell.graph_invariants()[2],
+                          ref.graph_invariants()[2])
+
+
+def test_poscar_cli(tmp_path, capsys):
+    from sronoise.__main__ import main
+    cell = build_supercell("fcc", 3, 1)
+    rng = np.random.default_rng(1)
+    lab = rng.permutation(np.repeat([0, 1, 2], 36))
+    order = np.argsort(lab, kind="stable")
+    a = 3.6
+    with open(tmp_path / "POSCAR", "w") as f:
+        f.write("test\n1.0\n")
+        for v in np.diag(cell.box) * a:
+            f.write(" ".join(f"{x:.6f}" for x in v) + "\n")
+        f.write("Ni Co Cr\n36 36 36\nCartesian\n")
+        for p in cell.positions[order] * a:
+            f.write(" ".join(f"{x:.6f}" for x in p) + "\n")
+    main([str(tmp_path / "POSCAR"), "--shells", "2"])
+    out = capsys.readouterr().out
+    assert "108 sites" in out and "Ni-Co" in out and "global chi2" in out

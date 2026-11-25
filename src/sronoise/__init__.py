@@ -1,6 +1,6 @@
 """Exact finite-size null statistics for Warren-Cowley short-range order."""
 
-from .lattice import Supercell, build_supercell
+from .lattice import Supercell, build_supercell, from_positions, read_poscar
 from .moments import WCNull, pair_count_moments, standard_bias
 from .counting import pair_counts, warren_cowley, random_configs
 

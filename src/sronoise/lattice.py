@@ -187,3 +187,117 @@ def build_supercell(structure: str, reps, n_shells: int = 3) -> Supercell:
             nb[sel] = order[pos]
         neighbours.append(nb)
     return Supercell(structure, reps, positions, box, list(radii), neighbours)
+
+
+def from_positions(positions, lattice, n_shells: int = 3, tol: float = 0.05,
+                   cartesian: bool = True) -> Supercell:
+    """Build a Supercell from arbitrary periodic positions.
+
+    Parameters
+    ----------
+    positions : (N, 3) coordinates (Cartesian, or fractional if
+        `cartesian` is False)
+    lattice : (3, 3) cell vectors as rows
+    n_shells : number of coordination shells
+    tol : distance tolerance used to group neighbours into shells (same
+        units as `lattice`).  Use ideal (unrelaxed) lattice positions, or a
+        tolerance larger than the relaxation displacements.
+
+    Every site must have the same number of neighbours in each shell
+    (a single-sublattice crystal); otherwise a ValueError is raised.
+    """
+    L = np.asarray(lattice, dtype=float)
+    P = np.asarray(positions, dtype=float)
+    if not cartesian:
+        P = P @ L
+    n = len(P)
+    inv = np.linalg.inv(L)
+    frac = (P @ inv) % 1.0
+    P = frac @ L
+    vol = abs(np.linalg.det(L))
+    widths = vol / np.linalg.norm(np.cross(L[[1, 2, 0]], L[[2, 0, 1]]),
+                                  axis=1)
+
+    def images(rc):
+        m = np.ceil(rc / widths).astype(int) + 1
+        g = [np.arange(-k, k + 1) for k in m]
+        sh = np.array(np.meshgrid(*g, indexing="ij")).reshape(3, -1).T
+        return sh @ L
+
+    # shell radii from site 0, growing the cutoff until enough shells
+    rc = 1.5 * (vol / n) ** (1 / 3)
+    while True:
+        T = images(rc)
+        d = (P[None, :, :] - P[0] + T[:, None, :]).reshape(-1, 3)
+        r = np.sort(np.linalg.norm(d, axis=1))
+        r = r[r > tol]
+        radii = []
+        for x in r:
+            if x > rc:
+                break
+            if not radii or x - radii[-1] > tol:
+                radii.append(x)
+        if len(radii) > n_shells:
+            radii = radii[:n_shells]
+            r = r[r <= rc]
+            break
+        rc *= 1.4
+    # shell boundaries halfway between consecutive radii
+    rr = np.array(radii)
+    nxt = r[r > rr[-1] + tol]
+    upper_last = 0.5 * (rr[-1] + nxt[0]) if len(nxt) else rr[-1] + tol
+    edges = np.concatenate([[0.5 * rr[0]], 0.5 * (rr[1:] + rr[:-1]),
+                            [upper_last]])
+    T = images(edges[-1])
+    shells = [[] for _ in range(n_shells)]
+    for i in range(n):
+        d = P[None, :, :] - P[i] + T[:, None, :]          # (n_img, n, 3)
+        r_i = np.linalg.norm(d, axis=2)
+        j_all = np.broadcast_to(np.arange(n), r_i.shape)
+        for s in range(n_shells):
+            hit = (r_i > edges[s]) & (r_i <= edges[s + 1])
+            shells[s].append(np.sort(j_all[hit]))
+    neighbours = []
+    for s in range(n_shells):
+        zs = {len(x) for x in shells[s]}
+        if len(zs) != 1:
+            raise ValueError(f"shell {s + 1} has unequal coordination "
+                             f"numbers {sorted(zs)}; check `tol`")
+        neighbours.append(np.array(shells[s], dtype=np.int64))
+    box = np.linalg.norm(L, axis=1)
+    return Supercell("custom", (1, 1, 1), P, box, [float(x) for x in radii],
+                     neighbours)
+
+
+def read_poscar(path):
+    """Minimal VASP POSCAR/CONTCAR reader.
+
+    Returns (lattice (3,3), positions (N,3) Cartesian, labels (N,) int,
+    species names).
+    """
+    with open(path) as f:
+        lines = [ln.strip() for ln in f if ln.strip()]
+    scale = float(lines[1].split()[0])
+    lat = np.array([[float(x) for x in lines[k].split()[:3]]
+                    for k in (2, 3, 4)])
+    lat = lat * scale if scale > 0 else lat * (abs(scale) /
+                                                abs(np.linalg.det(lat))) \
+        ** (1 / 3)
+    tok = lines[5].split()
+    if all(t.lstrip("-").isdigit() for t in tok):
+        names = [f"X{k}" for k in range(len(tok))]
+        counts = [int(t) for t in tok]
+        k = 6
+    else:
+        names = tok
+        counts = [int(t) for t in lines[6].split()]
+        k = 7
+    if lines[k][0] in "sS":
+        k += 1
+    cart = lines[k][0] in "cCkK"
+    n = sum(counts)
+    xyz = np.array([[float(x) for x in lines[k + 1 + i].split()[:3]]
+                    for i in range(n)])
+    pos = xyz * (scale if scale > 0 else 1.0) if cart else xyz @ lat
+    labels = np.repeat(np.arange(len(counts)), counts)
+    return lat, pos, labels, names
