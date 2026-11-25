@@ -5,3 +5,4 @@ __pycache__/
 build/
 *.so
 data/*.npz
+src/sronoise/_kawasaki_*.so
