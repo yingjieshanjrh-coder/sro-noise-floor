@@ -185,6 +185,28 @@ docs/theory.md  derivations
 tests/          pytest suite (enumeration, sampling, asymptotics, CLI)
 ```
 
+## Relation to previous work
+
+* **Join-count statistics.** Pair counts on a lattice are the "join counts"
+  of spatial statistics. Their mean and variance for k colours under
+  sampling without replacement are classical (Dacey 1968; Cliff and Ord,
+  *Spatial Processes*, 1981) and are implemented, for example, in the R
+  package `spdep`. This work builds on that result and adds: the full
+  covariance between all species pairs *and* between different shells;
+  periodic cells in which a pair of sites is joined by several lattice
+  vectors; the mapping to Warren–Cowley parameters, including their
+  composition-independent finite-cell bias and an exactly unbiased
+  estimator; a leading-order law in terms of the bond count; and a
+  global test that accounts for the constraints and correlations.
+* **Empirical randomness checks.** Several codes judge the randomness of
+  a supercell by comparing its Warren–Cowley parameters with those of
+  randomly generated cells (e.g. the randomness score of SimplySQS,
+  arXiv:2510.18020). The exact moments here give the same reference
+  without sampling and extend it to formal tests.
+* **Observations of the effect.** Small-cell studies have noted that
+  random cells yield a spread of α and values biased away from zero
+  (e.g. arXiv:2307.05709). The present results quantify both exactly.
+
 ## Scope and limitations
 
 * The null model is a random arrangement on a fixed lattice. It says

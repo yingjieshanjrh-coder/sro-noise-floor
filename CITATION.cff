@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "sro-noise-floor: exact finite-size statistics for Warren-Cowley short-range-order parameters"
+type: software
+authors:
+  - family-names: Shan
+    given-names: Yingjie
+    email: yingjieshanjrh@gmail.com
+version: 0.1.0
+date-released: 2026-11-25
+license: MIT
+repository-code: "https://github.com/yingjieshanjrh-coder/sro-noise-floor"
+keywords:
+  - short-range order
+  - Warren-Cowley parameter
+  - high-entropy alloys
+  - finite-size effects

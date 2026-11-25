@@ -1,0 +1,19 @@
+{
+  "title": "sro-noise-floor: exact finite-size statistics for Warren-Cowley short-range-order parameters",
+  "upload_type": "software",
+  "description": "Exact mean and covariance of Warren-Cowley short-range-order parameters for a random arrangement of atoms in a finite periodic supercell (any lattice, composition, cell size and coordination shells), an unbiased estimator, significance tests (single-parameter, global chi-squared, permutation), a POSCAR command-line tool, and scripts reproducing all figures.",
+  "creators": [
+    {"name": "Shan, Yingjie"}
+  ],
+  "license": "MIT",
+  "keywords": [
+    "short-range order",
+    "Warren-Cowley parameter",
+    "high-entropy alloys",
+    "GeSn",
+    "Monte Carlo",
+    "finite-size effects",
+    "join-count statistics",
+    "statistical significance"
+  ]
+}
