@@ -52,6 +52,22 @@ distinguishable from randomness.
    even if it contains no Sn–Sn bonds at all: the probability of zero
    bonds in a random cell is above 0.13 (Fig. 2c).
 
+6. **Published small-cell results, reassessed** (Fig. 5,
+   `scripts/reassess_literature.py`). In a widely cited DFT-MC study of
+   NiCrCo and NiCrCoFe in 108-atom cells (Tamm et al., Acta Mater. 2015;
+   400–600 swap trials in total), the global test confirms non-random
+   order at 500 K (p ≈ 10⁻⁴), but only 13 of the 48 tabulated pair values
+   exceed 2σ of the random-cell noise, the NiCrCo state at 1200 K and the
+   NiCrCoFe state at 800 K are not distinguishable from random, and the
+   scatter of the values about a smooth temperature dependence corresponds
+   to about two independent configurations. The non-monotonic Cr–Cr values
+   (0.44, 0.21, 0.39 at 500, 800, 1200 K) are within that noise. By
+   contrast, the CrCoNi values of Ding et al. (PNAS 2018; 18 independent
+   180-atom cells) are significant even for a single cell (|z| = 3–6.5).
+   For GeSn in a 64-atom cell (Cao et al., ACS AMI 2020) the Sn–Sn
+   avoidance is real, but the random reference coordination number in that
+   cell is 0.952, not 1, and the offset grows to 11 % at 12.5 % Sn.
+
 ## Install
 
 ```bash
@@ -165,6 +181,7 @@ Full table: [data/reference_table.csv](data/reference_table.csv).
 | ![](figures/fig2_dilute_gesn.png) | **Fig. 2** (a) Null mean of the standard like-pair estimator. (b) Actual false-positive rate of a nominal 5 % one-sided z-test for Sn–Sn avoidance in diamond-lattice GeSn. (c) Smallest attainable p-value for avoidance from a single configuration. |
 | ![](figures/fig3_detectability.png) | **Fig. 3** (a) Sites needed for a 2σ first-shell signal, fcc, equiatomic K-component alloys. (b) Exact noise floor for an equiatomic quinary fcc cell; dotted: leading order. |
 | ![](figures/fig4_power.png) | **Fig. 4** Swap Monte Carlo of a quinary fcc lattice gas with fixed first-shell pair interactions, 300 independent snapshots per point. (a) Detection rate of the global χ² test. The false-positive rate on random cells is 4–7 % for all sizes. (b) Fraction of pairs with true \|α\| > 0.02 whose sign is reproduced by one snapshot. |
+| ![](figures/fig5_literature.png) | **Fig. 5** (a) First-shell like-pair values reported for NiCrCoFe in a 108-atom cell (Tamm et al. 2015) with the ±2σ band of a random 108-atom cell. (b) z-scores of published values against the exact random-cell null (single snapshot unless stated). |
 
 ## Reproduce
 
