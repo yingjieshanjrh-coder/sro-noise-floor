@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sronoise"
+version = "0.1.0"
+description = "Exact finite-size null statistics for Warren-Cowley short-range order parameters"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [{name = "Yingjie Shan", email = "yingjieshanjrh@gmail.com"}]
+requires-python = ">=3.9"
+dependencies = ["numpy>=1.22", "scipy>=1.8"]
+
+[project.optional-dependencies]
+test = ["pytest"]
+scripts = ["matplotlib>=3.5"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
