@@ -10,8 +10,8 @@ Sources (values transcribed from the publications):
        DFT-MC at 500 K, 18 independent 180-atom CrCoNi cells.  Reported as
        dDelta = N0 - N with N0 = z c_j = 4 for the first shell, so
        alpha = dDelta / 4.
-  C20  B. Cao et al., ACS Appl. Mater. Interfaces 12, 57245 (2020),
-       doi:10.1021/acsami.0c18483 ; arXiv:2010.02991
+  C20  B. Cao et al., ACS Appl. Mater. Interfaces 12, 57245 (2020);
+       arXiv:2010.02991
        DFT-MC, 64-atom Ge0.75Sn0.25 (16 Sn), Sn-Sn first-shell coordination
        number 0.33 +- 0.02 at 300 K, compared with 1 for a random alloy.
 """
