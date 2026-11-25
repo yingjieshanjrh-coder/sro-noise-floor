@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sronoise"
-version = "0.1.0"
+version = "0.2.0"
 description = "Exact finite-size null statistics for Warren-Cowley short-range order parameters"
 readme = "README.md"
 license = {text = "MIT"}

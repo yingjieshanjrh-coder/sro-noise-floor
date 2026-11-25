@@ -241,7 +241,7 @@ If you use this code, please cite the archived release:
 
 ```
 Y. Shan, sro-noise-floor: exact finite-size statistics for Warren-Cowley
-short-range-order parameters, version 0.1.0 (2026).
+short-range-order parameters, version 0.2.0 (2026).
 Zenodo. https://doi.org/10.5281/zenodo.24543374
 ```
 
@@ -250,7 +250,7 @@ Zenodo. https://doi.org/10.5281/zenodo.24543374
   author    = {Shan, Yingjie},
   title     = {sro-noise-floor: exact finite-size statistics for
                Warren-Cowley short-range-order parameters},
-  version   = {0.1.0},
+  version   = {0.2.0},
   year      = {2026},
   publisher = {Zenodo},
   doi       = {10.5281/zenodo.24543374},
