@@ -47,15 +47,15 @@ distinguishable from randomness.
    flagged every time (Fig. 4).
 
 5. **Dilute solutes need exact tests.** For GeSn, the Sn–Sn bond count in
-   a small cell is a handful of integers. A 64-atom cell with ≤ 8 Sn atoms
-   (≤ 12.5 %) cannot demonstrate Sn–Sn avoidance from one configuration
+   a small cell is a handful of integers. A 64-atom cell with ≤ 9 Sn atoms
+   (≤ 14 %) cannot demonstrate Sn–Sn avoidance from one configuration
    even if it contains no Sn–Sn bonds at all: the probability of zero
-   bonds in a random cell is above 0.13 (Fig. 2c).
+   bonds in a random cell is 0.13 for 8 and 0.07 for 9 Sn atoms (Fig. 2c).
 
 6. **Published small-cell results, reassessed** (Fig. 5,
    `scripts/reassess_literature.py`). In a widely cited DFT-MC study of
    NiCrCo and NiCrCoFe in 108-atom cells (Tamm et al., Acta Mater. 2015;
-   400–600 swap trials in total), the global test confirms non-random
+   400 and 600 MC steps, about 4–6 swap trials per atom), the global test confirms non-random
    order at 500 K (p ≈ 10⁻⁴), but only 13 of the 48 tabulated pair values
    exceed 2σ of the random-cell noise, the NiCrCo state at 1200 K and the
    NiCrCoFe state at 800 K are not distinguishable from random, and the
@@ -64,9 +64,10 @@ distinguishable from randomness.
    (0.44, 0.21, 0.39 at 500, 800, 1200 K) are within that noise. By
    contrast, the CrCoNi values of Ding et al. (PNAS 2018; 18 independent
    180-atom cells) are significant even for a single cell (|z| = 3–6.5).
-   For GeSn in a 64-atom cell (Cao et al., ACS AMI 2020) the Sn–Sn
-   avoidance is real, but the random reference coordination number in that
-   cell is 0.952, not 1, and the offset grows to 11 % at 12.5 % Sn.
+   For GeSn (Cao et al., ACS AMI 2020; 32-, 64- and 128-atom cells) the
+   Sn–Sn avoidance is real, but the random reference coordination number
+   is 0.90, 0.95 and 0.98 in those cells, not 1; in a 64-atom cell the
+   offset grows to 11 % at 12.5 % Sn.
 
 ## Install
 

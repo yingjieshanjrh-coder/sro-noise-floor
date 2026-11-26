@@ -3,8 +3,10 @@ exact random-cell null.
 
 Sources (values transcribed from the publications):
   T15  A. Tamm et al., Acta Mater. 99, 307 (2015), doi:10.1016/j.actamat.2015.08.015
-       DFT-MC, 108-atom fcc cell, 400 (ternary) / 600 (quaternary) swap
-       trials in total (4-6 per atom), SRO averaged over the last steps.
+       DFT-MC, 108-atom fcc cell started from SQS, 400 (ternary) / 600
+       (quaternary) MC steps (about 4-6 swap trials per atom), SRO averaged
+       over the last steps.  The tables do not name the shell; the text
+       discusses nearest neighbours.
        Tables 1 and 3, first shell.
   D18  J. Ding et al., PNAS 115, 8919 (2018), doi:10.1073/pnas.1808660115
        DFT-MC at 500 K, 18 independent 180-atom CrCoNi cells.  Reported as
@@ -12,8 +14,10 @@ Sources (values transcribed from the publications):
        alpha = dDelta / 4.
   C20  B. Cao et al., ACS Appl. Mater. Interfaces 12, 57245 (2020);
        arXiv:2010.02991
-       DFT-MC, 64-atom Ge0.75Sn0.25 (16 Sn), Sn-Sn first-shell coordination
-       number 0.33 +- 0.02 at 300 K, compared with 1 for a random alloy.
+       DFT-MC, Ge0.75Sn0.25 in 32-, 64- and 128-atom cells (the cell behind
+       the quoted value is not stated; evaluated here for 64 atoms, 16 Sn),
+       Sn-Sn first-shell coordination number 0.33 +- 0.02 at 300 K,
+       compared with 1 for a random alloy.
 """
 import csv
 import os
