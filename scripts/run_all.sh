@@ -9,3 +9,4 @@ python3 fig3_detectability.py
 python3 fig4_power.py
 python3 make_table.py
 python3 reassess_literature.py
+python scripts/snapshot_averaging.py
