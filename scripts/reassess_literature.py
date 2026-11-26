@@ -182,32 +182,41 @@ ax.set_ylim(-0.6, 0.55)
 panel_label(ax, "a")
 
 ax = axes[1]
-groups = [("NiCrCo 108", [r for r in t15 if r["system"] == "NiCrCo"], C[0]),
-          ("NiCrCoFe 108", [r for r in t15 if r["system"] == "NiCrCoFe"],
-           C[1])]
+# effective number of independent configurations measured on the
+# authors' own DFT-MC trajectories (tamm_chains.py); median over 24 runs
+try:
+    import pandas as _pd
+    N_EFF_T15 = float(_pd.read_csv(os.path.join(DATA, "tamm_chains.csv")).n_eff.median())
+except (FileNotFoundError, ImportError):
+    N_EFF_T15 = 5.7
 rng = np.random.default_rng(0)
-for k, (lab, rr, col) in enumerate(groups):
-    zs = np.array([r["z"] for r in rr])
-    ax.plot(zs, k + rng.uniform(-0.15, 0.15, len(zs)), MK[k], color=col,
-            mfc="none", mew=1.0, ms=5)
+ypos = 0
+labels = []
+for k, alloy in enumerate(("NiCrCo", "NiCrCoFe")):
+    zs = np.array([r["z"] for r in t15 if r["system"] == alloy])
+    jit = rng.uniform(-0.15, 0.15, len(zs))
+    ax.plot(zs, ypos + jit, MK[k], color=C[k], mfc="none", mew=1.0, ms=5)
+    ax.plot(zs * np.sqrt(N_EFF_T15), ypos + 1 + jit, MK[k], color=C[k], ms=5)
+    labels += [f"Tamm: {alloy}, 108 (1 config.)",
+               f"Tamm: {alloy}, 108 ($n_{{\\rm eff}}$={N_EFF_T15:.1f})"]
+    ypos += 2
 d18 = [r for r in rows if r["source"] == "Ding 2018"]
-ax.plot([r["z"] for r in d18 if "18" not in r["pair"]], [2] * 3, MK[2],
+ax.plot([r["z"] for r in d18 if "18" not in r["pair"]], [ypos] * 3, MK[2],
         color=C[2], mfc="none", mew=1.0, ms=5)
-ax.plot([r["z"] for r in d18 if "18" in r["pair"]], [3] * 3, MK[2],
+ax.plot([r["z"] for r in d18 if "18" in r["pair"]], [ypos + 1] * 3, MK[2],
         color=C[2], ms=5)
 c20 = [r for r in rows if r["source"] == "Cao 2020"][0]
-ax.plot([c20["z"]], [4], MK[3], color=C[3], ms=5)
+ax.plot([c20["z"]], [ypos + 2], MK[3], color=C[3], ms=5)
+labels += ["Ding: CrCoNi, 180 (1 cell)", "Ding: CrCoNi, 18×180", "Cao: GeSn, 64 (1 config.)"]
 ax.axvspan(-2, 2, color="#eeeeee", zorder=0)
-ax.set_yticks(range(5))
-ax.set_yticklabels(["Tamm: NiCrCo, 108", "Tamm: NiCrCoFe, 108",
-                    "Ding: CrCoNi, 180 (1 cell)", "Ding: CrCoNi, 18×180",
-                    "Cao: GeSn, 64 (1 snapshot)"], fontsize=7)
+ax.set_yticks(range(len(labels)))
+ax.set_yticklabels(labels, fontsize=7)
 ax.set_xscale("symlog", linthresh=2)
-ax.set_xlim(-35, 40)
-ax.set_xticks([-20, -5, -2, 0, 2, 5, 20])
-ax.set_xticklabels(["−20", "−5", "−2", "0", "2", "5", "20"])
+ax.set_xlim(-60, 60)
+ax.set_xticks([-50, -10, -2, 0, 2, 10, 50])
+ax.set_xticklabels(["−50", "−10", "−2", "0", "2", "10", "50"])
 ax.set_xlabel("z against random-cell null (symlog)")
-ax.set_ylim(-0.6, 4.6)
+ax.set_ylim(-0.6, len(labels) - 0.4)
 ax.invert_yaxis()
 panel_label(ax, "b")
 fig.tight_layout()

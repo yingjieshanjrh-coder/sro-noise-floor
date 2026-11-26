@@ -52,22 +52,32 @@ distinguishable from randomness.
    even if it contains no Sn–Sn bonds at all: the probability of zero
    bonds in a random cell is 0.13 for 8 and 0.07 for 9 Sn atoms (Fig. 2c).
 
-6. **Published small-cell results, reassessed** (Fig. 5,
-   `scripts/reassess_literature.py`). In a widely cited DFT-MC study of
-   NiCrCo and NiCrCoFe in 108-atom cells (Tamm et al., Acta Mater. 2015;
-   400 and 600 MC steps, about 4–6 swap trials per atom), the global test confirms non-random
-   order at 500 K (p ≈ 10⁻⁴), but only 13 of the 48 tabulated pair values
-   exceed 2σ of the random-cell noise, the NiCrCo state at 1200 K and the
-   NiCrCoFe state at 800 K are not distinguishable from random, and the
-   scatter of the values about a smooth temperature dependence corresponds
-   to about two independent configurations. The non-monotonic Cr–Cr values
-   (0.44, 0.21, 0.39 at 500, 800, 1200 K) are within that noise. By
-   contrast, the CrCoNi values of Ding et al. (PNAS 2018; 18 independent
-   180-atom cells) are significant even for a single cell (|z| = 3–6.5).
-   For GeSn (Cao et al., ACS AMI 2020; 32-, 64- and 128-atom cells) the
-   Sn–Sn avoidance is real, but the random reference coordination number
-   is 0.90, 0.95 and 0.98 in those cells, not 1; in a 64-atom cell the
-   offset grows to 11 % at 12.5 % Sn.
+6. **Published small-cell results, reassessed** (Figs. 5 and 6,
+   `scripts/reassess_literature.py`, `scripts/tamm_chains.py`). For NiCrCo
+   and NiCrCoFe in 108-atom cells (Tamm et al., Acta Mater. 2015; 400 and
+   600 MC steps, about 4–6 swap trials per atom), the DFT-MC trajectories
+   the authors later released (doi:10.23673/RE-518; mostly preliminary
+   runs) show that an average over the second half of a run, 50 to 1500
+   snapshots, carries the information of only 4–11 independent
+   configurations (median 5.7); the scatter between runs with different
+   seeds agrees with this to within a factor 1.4 in variance. With this
+   n_eff all six tabulated states are non-random (global p ≤ 2×10⁻⁴), but
+   the tabulated values scatter with temperature about twice as much as
+   sampling alone allows, and in the longest released runs the parameters
+   at 4–6 trials per atom differ from the late-run values by 0.06–0.11
+   (rms), so the reported budget does not reach equilibrium in those runs.
+   The CrCoNi values of Ding et al. (PNAS 2018; 18 independent 180-atom
+   cells) are significant even for a single cell (|z| = 3–6.5). For GeSn
+   (Cao et al., ACS AMI 2020; 32-, 64- and 128-atom cells) the Sn–Sn
+   avoidance is real, but the random reference coordination number is
+   0.90, 0.95 and 0.98 in those cells, not 1; in a 64-atom cell the offset
+   grows to 11 % at 12.5 % Sn.
+
+7. **Averaging correlated snapshots** (`scripts/snapshot_averaging.py`).
+   Averaging 10–50 snapshots taken a few exchanges apart in a chain that
+   samples the random state, and dividing the null covariance by the
+   number of snapshots, declares a random 108-atom cell ordered in up to
+   99 % of cases; dividing by n_eff restores the nominal rate.
 
 ## Install
 
@@ -182,7 +192,8 @@ Full table: [data/reference_table.csv](data/reference_table.csv).
 | ![](figures/fig2_dilute_gesn.png) | **Fig. 2** (a) Null mean of the standard like-pair estimator. (b) Actual false-positive rate of a nominal 5 % one-sided z-test for Sn–Sn avoidance in diamond-lattice GeSn. (c) Smallest attainable p-value for avoidance from a single configuration. |
 | ![](figures/fig3_detectability.png) | **Fig. 3** (a) Sites needed for a 2σ first-shell signal, fcc, equiatomic K-component alloys. (b) Exact noise floor for an equiatomic quinary fcc cell; dotted: leading order. |
 | ![](figures/fig4_power.png) | **Fig. 4** Swap Monte Carlo of a quinary fcc lattice gas with fixed first-shell pair interactions, 300 independent snapshots per point. (a) Detection rate of the global χ² test. The false-positive rate on random cells is 4–7 % for all sizes. (b) Fraction of pairs with true \|α\| > 0.02 whose sign is reproduced by one snapshot. |
-| ![](figures/fig5_literature.png) | **Fig. 5** (a) First-shell like-pair values reported for NiCrCoFe in a 108-atom cell (Tamm et al. 2015) with the ±2σ band of a random 108-atom cell. (b) z-scores of published values against the exact random-cell null (single snapshot unless stated). |
+| ![](figures/fig5_literature.png) | **Fig. 5** (a) First-shell like-pair values reported for NiCrCoFe in a 108-atom cell (Tamm et al. 2015) with the ±2σ band of a random 108-atom cell. (b) z-scores of published values against the exact random-cell null; for Tamm et al. both for one configuration (open) and for the n_eff measured on their trajectories (filled). |
+| ![](figures/fig6_tamm_chains.png) | **Fig. 6** DFT-MC trajectories of NiCrCo (108 atoms) released by Tamm et al.: (a) Cr–Cr parameter along the chain with the ±2σ band of a random cell; (b) p-value of the global test for each configuration. |
 
 ## Reproduce
 
